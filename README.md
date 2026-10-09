@@ -27,10 +27,8 @@ Mais do que apenas simular o ato de votar, o projeto tem um forte pilar de exten
 | Função / Papel | Responsáveis | GitHub |
 | :--- | :--- | :--- |
 | **Pesquisa & Documentação** | Breno & Tarcísio | [@brenowz](https://github.com/brenowz) / [@Tarcísio](link) |
-| **Backend da Urna** | Breno 1 & Guilherme | [@brenowz](https://github.com/brenowz) / [@guizaofran
-](https://github.com/guizaofran) |
-| **Front Java Swing** | Ian 1 & Guilherme | [@ianmaciel0612](https://github.com/ianmaciel0612) / [@guizaofran
-](https://github.com/guizaofran) |
+| **Backend da Urna** | Breno 1 & Guilherme | [@brenowz](https://github.com/brenowz) / [@guizaofran](https://github.com/guizaofran) |
+| **Front Java Swing** | Ian 1 & Guilherme | [@ianmaciel0612](https://github.com/ianmaciel0612) / [@guizaofran](https://github.com/guizaofran) |
 | **Banco de Dados (Firebase)** | Felipe & Murilo | [@felipealexandrino-prog](https://github.com/felipealexandrino-prog) / [@MURILO02007](https://github.com/MURILO02007) |
 | **Tester** | Felipe & Murilo | [@felipealexandrino-prog](https://github.com/felipealexandrino-prog) / [@MURILO02007](https://github.com/MURILO02007) |
 | **Produção (Conteúdo Educativo / Vídeo)** | Ian 1 & Tarcísio | [@ianmaciel0612](https://github.com/ianmaciel0612) / [@Tarcísio](link) |
