@@ -1,8 +1,7 @@
 package urna.modelos;
 
 public class Voto { 
-
-    
+  
     private int numeroDigitado;
     private String tipo;
     private Candidato candidato;
