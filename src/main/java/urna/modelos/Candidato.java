@@ -35,4 +35,3 @@ public class Candidato {
         return numero;
     }
 }
-

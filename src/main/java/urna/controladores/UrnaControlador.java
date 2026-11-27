@@ -1,80 +1,79 @@
 package urna.controladores;
 
-import urna.modelos.Candidato;
-import urna.modelos.Voto;
 import java.util.ArrayList;
 import java.util.List;
 
+import urna.modelos.Candidato;
+import urna.modelos.Voto;
+
 public class UrnaControlador {
-    // (Atributos)
     private List<Candidato> candidatos;
     private List<Voto> votosRegistrados;
     private String cargoAtual;
     private boolean votacaoFinalizada;
 
-    // (Construtor)
     public UrnaControlador() {
         this.candidatos = new ArrayList<>();
         this.votosRegistrados = new ArrayList<>();
         this.cargoAtual = "Vereador";
         this.votacaoFinalizada = false;
 
-        // Carrega os candidatos de teste na memória
-        this.candidatos.add(new Candidato("Zé Ferreira", "PPP", 31234, "Vereador"));
-        this.candidatos.add(new Candidato("Dr. Carlos", "PAB", 31, "Prefeito"));
+        // Candidatos fictícios para teste
+        candidatos.add(new Candidato("Zé Ferreira", "Vereador", "PPP", "", 31234));
+        candidatos.add(new Candidato("Dr. Carlos", "Prefeito", "PAB", "", 31));
     }
 
-    // BUSCADOR DE CANDIDATOS 
     public Candidato buscarCandidato(int numeroDigitado) {
-        for (Candidato c : this.candidatos) {
-            if (c.getNumero() == numeroDigitado && c.getCargo().equals(this.cargoAtual)) {
-                return c; // Devolve o objeto completo (nome, partido, foto)
+        for (Candidato c : candidatos) {
+            if (c.getNumero() == numeroDigitado && c.getCargo().equals(cargoAtual)) {
+                return c;
             }
         }
-        return null; // Percorreu a lista toda e não achou (Voto Nulo)
+        return null;
     }
 
-    // AÇÕES DOS BOTÕES DA URNA
     public void confirmarVoto(int numeroDigitado) {
-        if (this.votacaoFinalizada) return; // Trava de segurança se já acabou
+        if (votacaoFinalizada) {
+            return;
+        }
 
         Candidato escolhido = buscarCandidato(numeroDigitado);
 
         if (escolhido != null) {
-            this.votosRegistrados.add(new Voto(this.cargoAtual, numeroDigitado, "VALIDO"));
+            votosRegistrados.add(new Voto(cargoAtual, numeroDigitado, "VALIDO", escolhido));
         } else {
-            this.votosRegistrados.add(new Voto(this.cargoAtual, numeroDigitado, "NULO"));
+            votosRegistrados.add(new Voto(cargoAtual, numeroDigitado, "NULO", null));
         }
 
         avancarEtapa();
     }
 
     public void votarBranco() {
-        if (this.votacaoFinalizada) return;
+        if (votacaoFinalizada) {
+            return;
+        }
 
-        this.votosRegistrados.add(new Voto(this.cargoAtual, 0, "BRANCO"));
+        votosRegistrados.add(new Voto(cargoAtual, 0, "BRANCO", null));
         avancarEtapa();
     }
 
-    // 5. A MÁQUINA DE ESTADOS
     private void avancarEtapa() {
-        if (this.cargoAtual.equals("Vereador")) {
-            this.cargoAtual = "Prefeito";
+        if (cargoAtual.equals("Vereador")) {
+            cargoAtual = "Prefeito";
         } else {
-            this.votacaoFinalizada = true;
+            votacaoFinalizada = true;
         }
     }
 
-    // 6. GETTERS
     public String getCargoAtual() {
-        return this.cargoAtual;
+        return cargoAtual;
     }
 
     public boolean isVotacaoFinalizada() {
-        return this.votacaoFinalizada;
+        return votacaoFinalizada;
     }
 
     public List<Voto> getVotosRegistrados() {
-        return this.votosRegistrados;
+        return votosRegistrados;
     }
 }
