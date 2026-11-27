@@ -1,3 +1,4 @@
+
 package urna.controladores;
 
 import java.util.ArrayList;
@@ -18,9 +19,37 @@ public class UrnaControlador {
         this.cargoAtual = "Vereador";
         this.votacaoFinalizada = false;
 
-        // Candidatos fictícios para teste
-        candidatos.add(new Candidato("Zé Ferreira", "Vereador", "PPP", "", 31234));
-        candidatos.add(new Candidato("Dr. Carlos", "Prefeito", "PAB", "", 31));
+        // Candidatos a vereador
+        candidatos.add(new Candidato("José Antônio Ferreira", "Zé Ferreira", "Vereador", "PPP", "img/ze-ferreira.jpg", "Comerciante, 47 anos, líder comunitário", 31234));
+
+        candidatos.add(new Candidato("Mariana Souza Oliveira", "Mari Oliveira", "Vereador", "AC", "img/mari-oliveira.jpg", "Enfermeira, 36 anos, ativista da saúde", 37456));
+
+        candidatos.add(new Candidato("Paulo Henrique Duarte", "Paulão da Construção", "Vereador", "MRS", "img/paulao-construcao.jpg", "Mestre de obras, 54 anos, ex-presidente de associação de moradores", 47789));
+
+        candidatos.add(new Candidato("Aline Cristina Pereira", "Aline da Escola", "Vereador", "UDT", "img/aline-escola.jpg", "Pedagoga, 39 anos, trabalha com educação infantil", 63321));
+
+        // Candidatos a prefeito
+        candidatos.add(new Candidato("Carlos Eduardo Menezes", "Dr. Carlos Menezes", "Prefeito", "PPP", "img/carlos-menezes.jpg", "Médico, 52 anos, ex-secretário de saúde", 31));
+
+        candidatos.add(new Candidato("Fernanda Lima Barreto", "Fernanda Barreto", "Prefeito", "AC", "img/fernanda-barreto.jpg", "Advogada, 45 anos, ex-vereadora", 37));
+
+        candidatos.add(new Candidato("Roberto Almeida Santos", "Beto do Comércio", "Prefeito", "MRS", "img/beto-comercio.jpg", "Empresário, 49 anos, presidente da associação comercial", 47));
+
+        candidatos.add(new Candidato("Luciana Ribeiro Costa", "Professora Luciana", "Prefeito", "UDT", "img/luciana-costa.jpg", "Professora, 41 anos, líder sindical", 63));
+    }
+
+    public List<Candidato> getCandidatos() {
+        return candidatos;
+    }
+
+    public void reiniciarVotacao() {
+        // Remove o voto de uma votação interrompida
+        if (!votacaoFinalizada && cargoAtual.equals("Prefeito")) {
+            votosRegistrados.remove(votosRegistrados.size() - 1);
+        }
+
+        cargoAtual = "Vereador";
+        votacaoFinalizada = false;
     }
 
     public Candidato buscarCandidato(int numeroDigitado) {
@@ -29,6 +58,7 @@ public class UrnaControlador {
                 return c;
             }
         }
+
         return null;
     }
 
