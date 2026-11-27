@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Urna Eletrônica — Simulação</title>
+  <meta name="description" content="Simulação de urna eletrônica brasileira para trabalho de faculdade. Fases 1-4: front-end integrado ao back-end Java.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!--
+    ============================================================
+    URNA ELETRÔNICA — SIMULAÇÃO (FASE 1: FRONT-END)
+    Trabalho de faculdade — HTML5 + CSS3 + JavaScript puro.
+
+    Estrutura:
+      css/style.css    -> aparência e responsividade
+      js/candidatos.js -> dados mock (fallback quando o servidor Java está offline)
+      js/api.js        -> integração com o servidor Java (Fase 4)
+      js/visor.js      -> tela da urna (cargo, dígitos, candidato)
+      js/teclado.js    -> teclado numérico + BRANCO/CORRIGE/CONFIRMA
+      js/app.js        -> orquestração do fluxo de votação
+    ============================================================
+  -->
+
+  <main class="urna" aria-label="Simulação de urna eletrônica">
+
+    <!-- ============ TELA / VISOR ============ -->
+    <section class="visor" aria-live="polite">
+      <!-- Cabeçalho do visor: cargo atual + controle do modo realista -->
+      <header class="visor-cabecalho">
+        <div class="visor-info-sessao">
+          <span class="visor-etiqueta">SIMULAÇÃO EDUCACIONAL</span>
+          <h1 class="visor-cargo" id="visor-cargo">PREFEITO</h1>
+        </div>
+
+        <!-- Toggle discreto do modo realista (sigilo do voto) -->
+        <label class="modo-realista" for="toggle-realista" title="Ativa o sigilo: os dígitos viram asteriscos e o candidato não é exibido">
+          <input type="checkbox" id="toggle-realista">
+          <span class="modo-realista-alavanca" aria-hidden="true"></span>
+          <span class="modo-realista-texto">MODO REALISTA</span>
+        </label>
+      </header>
+
+      <!-- Corpo do visor: número + dados do candidato -->
+      <div class="visor-corpo" id="visor-corpo">
+        <div class="visor-numero-area">
+          <p class="visor-rotulo">SEU VOTO PARA</p>
+          <div class="visor-digitos" id="visor-digitos" role="status" aria-label="Número digitado"></div>
+        </div>
+
+        <!-- Painel do candidato (preenchido pelo visor.js) -->
+        <div class="visor-candidato" id="visor-candidato" hidden></div>
+      </div>
+
+      <!-- Rodapé do visor: instruções -->
+      <footer class="visor-rodape">
+        <p id="visor-mensagem">Digite o número do candidato.</p>
+        <p class="visor-status" id="visor-status" aria-live="polite">Conectando ao servidor…</p>
+        <p class="visor-dica">Teclado físico também funciona &middot; ENTER = CONFIRMA &middot; ESC = CORRIGE</p>
+      </footer>
+    </section>
+
+    <!-- ============ TECLADO ============ -->
+    <section class="teclado-area" aria-label="Teclado da urna">
+      <div class="teclado-numerico" id="teclado-numerico" role="group" aria-label="Teclas numéricas"></div>
+
+      <div class="teclado-acoes" role="group" aria-label="Ações da urna">
+        <button type="button" class="botao botao-branco"  id="botao-branco">BRANCO</button>
+        <button type="button" class="botao botao-corrige" id="botao-corrige">CORRIGE</button>
+        <button type="button" class="botao botao-confirma" id="botao-confirma">CONFIRMA</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ TELA FINAL (FIM) ============ -->
+  <section class="tela-fim" id="tela-fim" hidden>
+    <div class="tela-fim-conteudo">
+      <h2 class="tela-fim-titulo">FIM</h2>
+      <p class="tela-fim-texto">Votação concluída. Obrigado por participar da simulação.</p>
+      <button type="button" class="botao botao-reiniciar" id="botao-reiniciar">INICIAR NOVA SESSÃO</button>
+    </div>
+  </section>
+
+  <!-- Os scripts carregam na ordem das dependências -->
+  <script src="js/candidatos.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/visor.js"></script>
+  <script src="js/teclado.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,513 @@
+/* ============================================================
+   URNA ELETRÔNICA — FASE 1 (FRONT-END)
+   css/style.css — aparência fiel à urna brasileira + responsivo
+   ============================================================ */
+
+/* ---------- Tokens de design ---------- */
+:root {
+  /* Cores fieis à urna real (identidade do objeto, não paleta decorativa) */
+  --cor-corpo-urna: #d7d7d7;          /* cinza claro do gabinete */
+  --cor-corpo-urna-borda: #9c9c9c;
+  --cor-tela-fundo: #ffffff;          /* tela branca como a real */
+  --cor-tela-moldura: #222222;        /* moldura escura da tela */
+  --cor-texto: #1a1a1a;
+  --cor-texto-secundario: #555555;
+
+  /* Teclas */
+  --cor-tecla: #3d3d3d;
+  --cor-tecla-texto: #f5f5f5;
+  --cor-branco: #f2f2f2;
+  --cor-corrige: #ff8c1a;             /* laranja */
+  --cor-confirma: #1e9e4f;            /* verde */
+
+  /* Estados */
+  --cor-alerta: #c62828;
+  --cor-suave: #eeeeee;
+
+  /* Tipografia */
+  --fonte-principal: "Arial", "Helvetica Neue", sans-serif;
+  --fonte-digitos: "Courier New", "Courier", monospace;
+
+  /* Espaçamento (múltiplos de 4) */
+  --espaco-1: 4px;
+  --espaco-2: 8px;
+  --espaco-3: 12px;
+  --espaco-4: 16px;
+  --espaco-6: 24px;
+  --espaco-8: 32px;
+}
+
+/* ---------- Reset básico ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--fonte-principal);
+  background: #b8b8b8;
+  color: var(--cor-texto);
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espaco-4);
+}
+
+/* ============================================================
+   CORPO DA URNA — tela à esquerda, teclado à direita (desktop)
+   ============================================================ */
+.urna {
+  display: flex;
+  flex-direction: row;
+  gap: var(--espaco-6);
+  align-items: stretch;
+
+  background: var(--cor-corpo-urna);
+  border: 2px solid var(--cor-corpo-urna-borda);
+  border-radius: var(--espaco-3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  padding: var(--espaco-6);
+  max-width: 1080px;
+  width: 100%;
+}
+
+/* ============================================================
+   VISOR
+   ============================================================ */
+.visor {
+  flex: 1 1 60%;
+  background: var(--cor-tela-fundo);
+  border: 6px solid var(--cor-tela-moldura);
+  border-radius: var(--espaco-2);
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+}
+
+.visor-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--espaco-3);
+  padding: var(--espaco-4) var(--espaco-4) var(--espaco-2);
+  border-bottom: 2px solid var(--cor-suave);
+}
+
+.visor-etiqueta {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--cor-texto-secundario);
+  margin-bottom: var(--espaco-1);
+}
+
+.visor-cargo {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* ---------- Toggle do modo realista ---------- */
+.modo-realista {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  cursor: pointer;
+  user-select: none;
+  padding: var(--espaco-2);
+  border-radius: var(--espaco-2);
+}
+
+.modo-realista input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.modo-realista-alavanca {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  background: #bbbbbb;
+  border-radius: 999px;
+  transition: background-color 200ms ease-out;
+  flex-shrink: 0;
+}
+
+.modo-realista-alavanca::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition: transform 200ms ease-out;
+}
+
+.modo-realista input:checked + .modo-realista-alavanca {
+  background: var(--cor-confirma);
+}
+
+.modo-realista input:checked + .modo-realista-alavanca::after {
+  transform: translateX(18px);
+}
+
+.modo-realista input:focus-visible + .modo-realista-alavanca {
+  outline: 3px solid var(--cor-corrige);
+  outline-offset: 2px;
+}
+
+.modo-realista-texto {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--cor-texto-secundario);
+}
+
+.modo-realista input:checked ~ .modo-realista-texto {
+  color: var(--cor-confirma);
+}
+
+/* ---------- Corpo do visor ---------- */
+.visor-corpo {
+  flex: 1;
+  display: flex;
+  gap: var(--espaco-6);
+  padding: var(--espaco-4);
+}
+
+.visor-numero-area {
+  flex: 1;
+}
+
+.visor-rotulo {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--cor-texto-secundario);
+  margin-bottom: var(--espaco-3);
+}
+
+/* Dígitos exibidos em "quadros" como na urna real */
+.visor-digitos {
+  display: flex;
+  gap: var(--espaco-2);
+  min-height: 64px;
+}
+
+.digito-quadro {
+  width: 52px;
+  height: 64px;
+  border: 2px solid var(--cor-texto);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fonte-digitos);
+  font-size: 2.4rem;
+  font-weight: 700;
+  background: #ffffff;
+}
+
+.digito-quadro-vazio {
+  border: 2px dashed #999999;
+  background: transparent;
+}
+
+.digito-quadro-piscando {
+  animation: piscar 1s step-end infinite;
+}
+
+@keyframes piscar {
+  50% { border-color: transparent; }
+}
+
+/* Dígito mascarado (modo realista) */
+.digito-quadro-mascarado {
+  font-size: 2rem;
+  letter-spacing: 0;
+}
+
+/* ---------- Painel do candidato ---------- */
+.visor-candidato {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaco-2);
+  width: 170px;
+  text-align: center;
+}
+
+.candidato-foto {
+  width: 130px;
+  height: 156px;
+  object-fit: cover;
+  object-position: top;
+  border: 2px solid var(--cor-texto);
+  border-radius: var(--espaco-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.candidato-nome {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.candidato-partido {
+  font-size: 0.85rem;
+  color: var(--cor-texto-secundario);
+}
+
+.candidato-voto-branco {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  align-self: flex-start;
+  margin-top: var(--espaco-4);
+}
+
+.candidato-voto-nulo {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--cor-alerta);
+  align-self: flex-start;
+  margin-top: var(--espaco-4);
+}
+
+.candidato-sigilo {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--cor-confirma);
+  text-transform: uppercase;
+  align-self: flex-start;
+  margin-top: var(--espaco-4);
+  border: 2px dashed var(--cor-confirma);
+  border-radius: var(--espaco-2);
+  padding: var(--espaco-3);
+}
+
+/* ---------- Rodapé do visor ---------- */
+.visor-rodape {
+  border-top: 2px solid var(--cor-suave);
+  padding: var(--espaco-3) var(--espaco-4) var(--espaco-4);
+}
+
+.visor-rodape p:first-child {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.visor-dica {
+  font-size: 0.72rem;
+  color: var(--cor-texto-secundario);
+  margin-top: var(--espaco-1);
+}
+
+/* Mensagem de alerta (voto nulo, número incompleto) */
+.visor-mensagem-alerta {
+  color: var(--cor-alerta);
+}
+
+/* ============================================================
+   TECLADO
+   ============================================================ */
+.teclado-area {
+  flex: 1 1 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  min-width: 260px;
+}
+
+.teclado-numerico {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--espaco-2);
+}
+
+.tecla {
+  min-height: 56px;            /* alvo de toque >= 44px */
+  min-width: 56px;
+  border: none;
+  border-radius: var(--espaco-2);
+  background: var(--cor-tecla);
+  color: var(--cor-tecla-texto);
+  font-family: var(--fonte-digitos);
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.45);
+  transition: transform 100ms ease-out, box-shadow 100ms ease-out;
+}
+
+.tecla:hover { background: #2c2c2c; }
+.tecla:active,
+.tecla-pressionada {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+}
+.tecla:focus-visible { outline: 3px solid var(--cor-corrige); outline-offset: 2px; }
+
+/* ---------- Botões de ação ---------- */
+.teclado-acoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.4fr;
+  gap: var(--espaco-2);
+}
+
+.botao {
+  min-height: 56px;            /* alvo de toque >= 44px */
+  border: none;
+  border-radius: var(--espaco-2);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
+  transition: transform 100ms ease-out, box-shadow 100ms ease-out, filter 100ms ease-out;
+}
+
+.botao:hover { filter: brightness(1.08); }
+.botao:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35); }
+.botao:focus-visible { outline: 3px solid var(--cor-tela-moldura); outline-offset: 2px; }
+.botao:disabled { opacity: 0.45; cursor: not-allowed; filter: none; }
+
+.botao-branco  { background: var(--cor-branco);  color: var(--cor-texto); }
+.botao-corrige { background: var(--cor-corrige); color: #2b1500; }
+.botao-confirma { background: var(--cor-confirma); color: #ffffff; font-size: 1rem; }
+
+.botao-reiniciar {
+  background: var(--cor-confirma);
+  color: #ffffff;
+  padding: 0 var(--espaco-6);
+}
+
+/* ============================================================
+   TELA FINAL (FIM)
+   ============================================================ */
+.tela-fim {
+  position: fixed;
+  inset: 0;
+  background: #0d3a1e;          /* verde escuro, como a urna real no fim */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: var(--espaco-4);
+}
+
+/* O atributo `hidden` precisa vencer o display:flex acima,
+   senão a tela de FIM cobre a urna o tempo todo. */
+.tela-fim[hidden] {
+  display: none;
+}
+
+.tela-fim-conteudo {
+  text-align: center;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaco-6);
+}
+
+.tela-fim-titulo {
+  font-size: clamp(4rem, 15vw, 8rem);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  line-height: 1;
+}
+
+.tela-fim-texto {
+  font-size: 1rem;
+  opacity: 0.9;
+  max-width: 40ch;
+}
+
+/* ============================================================
+   RESPONSIVIDADE
+   ============================================================ */
+
+/* Tablet: empilha tela acima do teclado */
+@media (max-width: 860px) {
+  .urna {
+    flex-direction: column;
+    gap: var(--espaco-4);
+    padding: var(--espaco-4);
+  }
+
+  .visor { min-height: 360px; }
+
+  .visor-corpo { gap: var(--espaco-4); }
+
+  .teclado-area { min-width: 0; }
+
+  .teclado-numerico .tecla { min-height: 60px; }
+}
+
+/* Celular: aproveita toda a largura, reduz quadros de dígito */
+@media (max-width: 480px) {
+  body { padding: var(--espaco-2); align-items: flex-start; }
+
+  .urna { padding: var(--espaco-3); border-radius: var(--espaco-2); }
+
+  .visor { border-width: 4px; min-height: 320px; }
+
+  .visor-cabecalho { flex-direction: column-reverse; gap: var(--espaco-2); }
+
+  .digito-quadro {
+    width: 42px;
+    height: 54px;
+    font-size: 1.9rem;
+  }
+
+  .visor-candidato { width: 130px; }
+  .candidato-foto { width: 100px; height: 120px; font-size: 2rem; }
+  .candidato-nome { font-size: 0.82rem; }
+  .candidato-partido { font-size: 0.75rem; }
+
+  .visor-dica { display: none; }
+
+  .tecla { min-height: 56px; font-size: 1.3rem; }
+  .botao { min-height: 56px; font-size: 0.75rem; }
+  .botao-confirma { font-size: 0.85rem; }
+}
+
+/* Telas muito estreitas: ainda menor */
+@media (max-width: 340px) {
+  .digito-quadro { width: 36px; height: 48px; font-size: 1.6rem; }
+  .teclado-acoes { grid-template-columns: 1fr 1fr; }
+  .botao-confirma { grid-column: 1 / -1; }
+}
+
+/* ---------- Acessibilidade: reduzir animação ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* MELHORIA FASE 4: indicador de conexão com o servidor */
+.visor-status { font-size: 0.7rem; opacity: 0.75; margin-top: 0.25rem; }
+.visor-status-online { color: var(--cor-confirma); opacity: 1; font-weight: 700; }
